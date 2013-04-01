@@ -29,13 +29,28 @@ EasyWebWorker = (function() {
   };
 
   EasyWebWorker.prototype.listen = function(event) {
-    var args, funcName;
+    var args, context, deep, func, funcName, nestedFunc, order, _i, _len;
 
     args = event.data;
     funcName = args[0];
     args = args.slice(1);
     args.unshift(event);
-    return this.self[funcName].apply(this.self, args);
+    if (funcName.indexOf(".") === -1) {
+      return this.self[funcName].apply(this.self, args);
+    } else {
+      nestedFunc = funcName.split(".");
+      funcName = this.self;
+      deep = nestedFunc.length;
+      context = "";
+      for (order = _i = 0, _len = nestedFunc.length; _i < _len; order = ++_i) {
+        func = nestedFunc[order];
+        funcName = funcName[func];
+        if (order === deep - 2) {
+          context = funcName;
+        }
+      }
+      return funcName.apply(context, args);
+    }
   };
 
   return EasyWebWorker;

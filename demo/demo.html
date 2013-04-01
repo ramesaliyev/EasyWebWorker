@@ -10,13 +10,36 @@
         // Create new EasyWebWorker with file.
         var worker = new EasyWebWorker('demo-worker.js', this);
 
-        // Execute function.
-        worker.execute("getSquares", [2,3,5]);
 
-        // Our callback function.
-        function getSquaresCallback(event, squares) {
-            console.log("Here is our squares: ",squares)
-        }
+        // Sample 1
+
+            // Execute function.
+            worker.execute("getSquares", [2,3,5]);
+
+            // Our callback function.
+            function getSquaresCallback(event, squares) {
+                console.log("Here is our squares: ", squares)
+            }
+
+        // Sample 2
+
+            // Execute function.
+            worker.execute("reverseText", "Hello guys wazzup?")
+
+            // Our nested callback function.
+            var NestedFunctions = {
+                textPrinter: {
+                    printToConsole: function(event, textToPrint) {
+                        console.log("Here is our reversed text: ", textToPrint, this)
+
+                        // Context test.
+                        this.printToTitle(textToPrint)
+                    },
+                    printToTitle: function(text) {
+                        window.document.title = text
+                    }
+                }
+            }
 
     </script>
     Open console for see communication.

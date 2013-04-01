@@ -24,7 +24,26 @@ class EasyWebWorker
     args.unshift(event)
 
     # Call func with arguments.
-    @self[funcName].apply(@self, args)
+
+    # If func is nested
+    if funcName.indexOf(".") is -1
+      @self[funcName].apply(@self, args)
+
+    # If not
+    else
+      nestedFunc = funcName.split(".")
+      funcName = @self
+      deep = nestedFunc.length
+      context = ""
+
+      for func, order in nestedFunc
+        funcName = funcName[func]
+
+        # Correct context.
+        if order is deep - 2
+          context = funcName
+
+      funcName.apply(context, args)
 
 # Worker side web worker controller.
 class WorkerSideController
