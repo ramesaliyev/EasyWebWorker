@@ -8,4 +8,4 @@ getSquares = (event, numberArray) ->
 reverseText = (event, text) ->
   reversedText = text.split("").reverse().join("")
 
-  self.execute("NestedFunctions.textPrinter.printToConsole", text)
+  self.execute("NestedFunctions.textPrinter.printToConsole", reversedText)
