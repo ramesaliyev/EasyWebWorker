@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "demo-worker.js",
+  "sourceRoot": "..",
+  "sources": [
+    "demo/demo-worker.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA,IAAA,MAAA;;AAAA,CAAA,YAAA,UAAA;;AAEA,CAFA,CAEqB,CAAR,EAAA,IAAC,CAAd,CAAa;CACX,KAAA,SAAA;;CAAA,CAAA,KAAA;;;AAAW,CAAA;UAAA,wCAAA;gCAAA;CAAA,EAAS,GAAT;CAAA;;CAAX;CAEK,CAA8B,EAA/B,GAAJ,EAAA,WAAA;CAHW"
+}

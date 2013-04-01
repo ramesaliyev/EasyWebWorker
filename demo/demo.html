@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Easy Web Worker</title>
+</head>
+<body>
+    <script src="../easy-web-worker.js"></script>
+    <script>
+
+        // Create new EasyWebWorker with file.
+        var worker = new EasyWebWorker('demo-worker.js', this);
+
+        // Execute function.
+        worker.execute("getSquares", [2,3,5]);
+
+        // Our callback function.
+        function getSquaresCallback(event, squares) {
+            console.log("Here is our squares: ",squares)
+        }
+
+    </script>
+    Open console for see communication.
+</body>
+</html>
