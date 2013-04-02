@@ -5,7 +5,8 @@ getSquares = (event, numberArray) ->
 
   self.execute("getSquaresCallback", squares)
 
-reverseText = (event, text) ->
-  reversedText = text.split("").reverse().join("")
+textOperations =
+  reverseText: (event, text) ->
+    reversedText = text.split("").reverse().join("")
 
-  self.execute("NestedFunctions.textPrinter.printToConsole", reversedText)
+    self.execute("NestedFunctions.textPrinter.printToConsole", reversedText)

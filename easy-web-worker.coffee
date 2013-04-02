@@ -1,76 +1,102 @@
+# Abstract Structure for EasyWebWorker
+class AbstractEasyWebWorker
+
+  # Execute function.
+  execute: (args) ->
+    # Copy arguments to avoid "DataCloneError: The object could not be cloned."
+    (arg for arg in args)
+
+  # Listen for communication.
+  listen: (event) ->
+
+    # Separate funcName and arguments.
+    args      = event.data
+    funcName  = args[0]
+    args      = args.slice(1)
+
+    # Add event as first argument.
+    args.unshift(event)
+
+    # If function name contains . (dot) process it as nested function.
+    if funcName.indexOf(".") isnt -1
+
+      # Split name.
+      nestedFunc  = funcName.split(".")
+      depth       = nestedFunc.length
+
+      # Start nesting from context.
+      funcName    = @self
+
+      # Reach function.
+      for func, order in nestedFunc
+        funcName = funcName[func]
+
+        # Correct context.
+        context = funcName if order is depth - 2
+
+      # Execute nested function with correct context.
+      funcName.apply(context, args)
+
+    else
+      # If function is single, direct execute it.
+      @self[funcName].apply(@self, args)
+
 # Browser side web worker controller.
-class EasyWebWorker
+class EasyWebWorker extends AbstractEasyWebWorker
+
+  # Create worker, get context and create listeners.
   constructor: (fileUrl, @self) ->
-    # Create worker.
+    # Create worker.@
     @worker = new Worker(fileUrl)
 
     # Listen for messages.
     @worker.onmessage = () =>
       @listen.apply(@, arguments)
 
+    # Error statement.
+    @worker.onerror = (event) =>
+      @error.call(@, event, event.filename, event.lineno, event.message)
+
+  # Execute worker function.
   execute: () ->
-    # Copy arguments to avoid "DataCloneError: The object could not be cloned."
-    args = (arg for arg in arguments)
-
     # Pass arguments to web worker.
-    @worker.postMessage(args)
+    @worker.postMessage(super(arguments))
 
-  listen: (event) ->
-    # Separate funcName and arguments.
-    args = event.data
+  # Error statement.
+  error: () ->
+    # Execute onError function if assigned.
+    @onerror.apply(@self, arguments) if @onerror instanceof Function
 
-    funcName = args[0]
-    args = args.slice(1)
-    args.unshift(event)
+  # Terminate worker.
+  terminate: () ->
+    # Close worker from browser.
+    @worker.terminate()
 
-    # Call func with arguments.
+  # Terminate alias.
+  close: () ->
+    # Close worker from browser.
+    @worker.terminate()
 
-    # If func is nested
-    if funcName.indexOf(".") is -1
-      @self[funcName].apply(@self, args)
-
-    # If not
-    else
-      nestedFunc = funcName.split(".")
-      funcName = @self
-      deep = nestedFunc.length
-      context = ""
-
-      for func, order in nestedFunc
-        funcName = funcName[func]
-
-        # Correct context.
-        if order is deep - 2
-          context = funcName
-
-      funcName.apply(context, args)
 
 # Worker side web worker controller.
-class WorkerSideController
+class WorkerSideController extends AbstractEasyWebWorker
+
+  # Get context and create listeners.
   constructor: (@self) ->
     # Listen for messages.
     @self.onmessage = () =>
       @listen.apply(@, arguments)
 
+  # Execute browser function.
   execute: () ->
-    # Copy arguments to avoid "DataCloneError: The object could not be cloned."
-    args = (arg for arg in arguments)
-
     # Pass arguments to web worker.
-    @self.postMessage(args)
-
-  listen: (event) ->
-    # Separate funcName and arguments.
-    args = event.data
-
-    funcName = args[0]
-    args = args.slice(1)
-    args.unshift(event)
-
-    # Call func with arguments.
-    @self[funcName].apply(@self, args)
+    @self.postMessage(super(arguments))
 
 # If in a worker, run automaticly.
 if this.document is undefined
-  this.caller = new WorkerSideController(@)
+
+  # Create controller.
+  this.caller  = new WorkerSideController(@)
+
+  # Create function alias.
   this.execute = this.caller.execute

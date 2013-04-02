@@ -1,8 +1,8 @@
 EasyWebWorker
 =============
 
-Easy Communication Protocol For Web Workers.
-Just execute worker functions from browser, and main functions from worker.
+Easy Communication Protocol For Web Workers.<br>
+*Just execute worker functions from browser, and main functions from worker.*
 
 ## Prepare
 
@@ -20,9 +20,29 @@ var worker = new EasyWebWorker("worker.js", this);
 importScripts("easy-web-worker.js");
 ```
 
+## Methods
+Error Statement (On browser.):
+```javascript
+worker.onerror = function(event,filename,lineno,message){
+    // ...
+}
+```
+
+Terminate From Browser:
+```javascript
+worker.terminate();
+// or
+worker.close();
+```
+
+Terminate In Worker (Same as default.):
+```javascript
+self.close();
+```
+
 ## Examples
 
-### Example 1
+### Example 1 (Simple Usage)
 Browser:
 ```javascript
 // Execute function
@@ -50,11 +70,11 @@ function getSquares(event, numberArray){
 ```
 
 
-### Example 2
+### Example 2 (Nested Functions)
 Browser:
 ```javascript
 // Execute function.
-worker.execute("reverseText", "Hello guys wazzup?")
+worker.execute("textOperations.reverseText", "Hello guys wazzup?")
 
 // Our nested callback function.
 var NestedFunctions = {
@@ -73,10 +93,11 @@ var NestedFunctions = {
 ```
 Worker:
 ```javascript
-// Example 2
-function reverseText(event, text){
-  var reversedText = text.split("").reverse().join("");
-
-  self.execute("NestedFunctions.textPrinter.printToConsole", text)
-}
+// Our nested function.
+textOperations = {
+  reverseText: function(event, text) {
+    var reversedText = text.split("").reverse().join("");
+    return self.execute("NestedFunctions.textPrinter.printToConsole", reversedText);
+  }
+};
 ```
