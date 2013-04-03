@@ -48,10 +48,16 @@ AbstractEasyWebWorker = (function() {
 EasyWebWorker = (function(_super) {
   __extends(EasyWebWorker, _super);
 
-  function EasyWebWorker(fileUrl, self) {
-    var _this = this;
+  function EasyWebWorker(fileUrl, self, startupData) {
+    var joiner, queryString,
+      _this = this;
 
     this.self = self;
+    if (startupData != null) {
+      joiner = fileUrl.indexOf("?") !== -1 ? "&" : "?";
+      queryString = startupData !== null ? JSON.stringify(startupData) : null;
+      fileUrl += joiner + queryString;
+    }
     this.worker = new Worker(fileUrl);
     this.worker.onmessage = function() {
       return _this.listen.apply(_this, arguments);
@@ -87,9 +93,27 @@ WorkerSideController = (function(_super) {
   __extends(WorkerSideController, _super);
 
   function WorkerSideController(self) {
-    var _this = this;
+    var locationHref, splitBy, startupData,
+      _this = this;
 
     this.self = self;
+    locationHref = this.self.location.href;
+    if (locationHref.indexOf("&") !== -1) {
+      splitBy = "&";
+    } else if (locationHref.indexOf("?") !== -1) {
+      splitBy = "?";
+    } else {
+      splitBy = false;
+    }
+    if (splitBy !== false) {
+      startupData = locationHref.split(splitBy);
+      startupData = startupData[startupData.length - 1];
+    }
+    if (startupData !== null && startupData !== void 0) {
+      this.self.startupData = JSON.parse(decodeURIComponent(startupData));
+    } else {
+      this.self.startupData = null;
+    }
     this.self.onmessage = function() {
       return _this.listen.apply(_this, arguments);
     };

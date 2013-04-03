@@ -8,14 +8,14 @@
     <script>
 
         // Create new EasyWebWorker with file.
-        var worker = new EasyWebWorker('demo-worker.js', this);
+        var worker = new EasyWebWorker('demo-worker.js', this, {name:"Derp", surname:"Derpson", age:"23"});
 
         // On error statement.
         worker.onerror = function(event,filename,lineno,message){
             console.log(event,filename,lineno,message);
         }
 
-        // Example 1
+        // Example 1 (Simple function)
             // Execute function.
             worker.execute("getSquares", [2,3,5]);
 
@@ -24,7 +24,7 @@
                 console.log("Here is our squares: ", squares)
             }
 
-        // Example 2
+        // Example 2 (Nested function)
             // Execute function.
             worker.execute("textOperations.reverseText", "Hello guys wazzup?")
 
@@ -45,6 +45,23 @@
                     }
                 }
             }
+
+        // Example 3 (Send startup data, mostly you can use it to send url settings etc.)
+        // Create startup data.
+        var startupData = {name:"Derp", surname:"Derpson", age:"23", location:"world"}
+
+        // Create worker with startupData.
+        var workerTwo = new EasyWebWorker('demo-worker.js', this, startupData)
+
+        console.time("startUpData Effects")
+        // Execute worker.
+        workerTwo.execute("whatIsTheSettings")
+
+        // Get our startupData back.
+        getSettingsBack = function(event, startupData){
+            console.log("Here is our startup data: ", startupData)
+            console.timeEnd("startUpData Effects")
+        }
 
     </script>
     Open console for see communication.

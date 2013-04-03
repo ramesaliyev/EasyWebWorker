@@ -45,8 +45,17 @@ class AbstractEasyWebWorker
 class EasyWebWorker extends AbstractEasyWebWorker
 
   # Create worker, get context and create listeners.
-  constructor: (fileUrl, @self) ->
-    # Create worker.@
+  constructor: (fileUrl, @self, startupData) ->
+    # Create QueryString for startupData
+    # If url also has QueryString add data as last value
+
+    if startupData?
+      joiner      = if fileUrl.indexOf("?") isnt -1 then "&" else "?"
+      queryString = unless startupData is null then JSON.stringify(startupData) else null
+      fileUrl += joiner + queryString
+
+
+    # Create worker.
     @worker = new Worker(fileUrl)
 
     # Listen for messages.
@@ -83,6 +92,29 @@ class WorkerSideController extends AbstractEasyWebWorker
 
   # Get context and create listeners.
   constructor: (@self) ->
+    # Get startup data from href and convert it to js object.
+    locationHref  = @self.location.href
+
+    # Check the joiner
+    if locationHref.indexOf("&") isnt -1
+      splitBy = "&"
+    else if locationHref.indexOf("?") isnt -1
+      splitBy = "?"
+    else
+      splitBy = false
+
+    # If href has starupData
+    if splitBy isnt false
+      startupData   = locationHref.split(splitBy)
+      startupData   = startupData[startupData.length-1]
+
+    # If startupData exist
+    if startupData isnt null and startupData isnt undefined
+      @self.startupData = JSON.parse(decodeURIComponent(startupData))
+    else
+      @self.startupData = null
+
+
     # Listen for messages.
     @self.onmessage = () =>
       @listen.apply(@, arguments)

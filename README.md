@@ -101,3 +101,30 @@ textOperations = {
   }
 };
 ```
+
+### Example 3 (Startup Data)<br>
+(It uses worker file's querystring. So keep it as tiny as possible.)
+Browser:
+```javascript
+// Create startup data.
+var startupData = {name:"Derp", surname:"Derpson", age:"23"}
+
+// Create worker with startupData.
+var workerTwo = new EasyWebWorker('demo-worker.js', this, startupData)
+
+// Execute worker.
+workerTwo.execute("whatIsTheSettings")
+
+// Get our startupData back.
+getSettingsBack = function(event, startupData){
+    console.log("Here is our startup data: ", startupData)
+}
+```
+
+Worker:
+```javascript
+function whatIsTheSettings(){
+    // Give settings back.
+    self.execute("getSettingsBack", self.startupData)
+}
+```

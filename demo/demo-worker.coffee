@@ -16,3 +16,7 @@ textOperations =
 
     # Call nested function.
     self.execute("NestedFunctions.textPrinter.printToConsole", reversedText)
+
+# Give me location
+whatIsTheSettings = () =>
+  self.execute("getSettingsBack", self.startupData)
