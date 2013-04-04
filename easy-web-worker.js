@@ -26,8 +26,13 @@ AbstractEasyWebWorker = (function() {
     args.unshift(event);
     if (funcName.indexOf(".") !== -1) {
       nestedFunc = funcName.split(".");
+      if (nestedFunc[0] === "window" && event.caller === "WebWorker") {
+        funcName = window;
+        nestedFunc = nestedFunc.slice(1);
+      } else {
+        funcName = this.self;
+      }
       depth = nestedFunc.length;
-      funcName = this.self;
       for (order = _i = 0, _len = nestedFunc.length; _i < _len; order = ++_i) {
         func = nestedFunc[order];
         funcName = funcName[func];
@@ -66,6 +71,11 @@ EasyWebWorker = (function(_super) {
       return _this.error.call(_this, event, event.filename, event.lineno, event.message);
     };
   }
+
+  EasyWebWorker.prototype.listen = function(event) {
+    event.caller = "WebWorker";
+    return EasyWebWorker.__super__.listen.call(this, event);
+  };
 
   EasyWebWorker.prototype.execute = function() {
     return this.worker.postMessage(EasyWebWorker.__super__.execute.call(this, arguments));
@@ -118,6 +128,11 @@ WorkerSideController = (function(_super) {
       return _this.listen.apply(_this, arguments);
     };
   }
+
+  WorkerSideController.prototype.listen = function(event) {
+    event.caller = "WebBrowser";
+    return WorkerSideController.__super__.listen.call(this, event);
+  };
 
   WorkerSideController.prototype.execute = function() {
     return this.self.postMessage(WorkerSideController.__super__.execute.call(this, arguments));

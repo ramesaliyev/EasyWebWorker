@@ -18,5 +18,9 @@ textOperations =
     self.execute("NestedFunctions.textPrinter.printToConsole", reversedText)
 
 # Give me location
-whatIsTheSettings = () =>
+whatIsTheSettings = (event) ->
   self.execute("getSettingsBack", self.startupData)
+
+# Call directly window assigned functions.
+logSomethingToConsole = () ->
+  self.execute("window.console.log", "I'm sexy and i know it.")

@@ -21,11 +21,17 @@ class AbstractEasyWebWorker
     if funcName.indexOf(".") isnt -1
 
       # Split name.
-      nestedFunc  = funcName.split(".")
-      depth       = nestedFunc.length
+      nestedFunc   = funcName.split(".")
 
-      # Start nesting from context.
-      funcName    = @self
+      # Check if target function is assigned to window and script running on browser.
+      if nestedFunc[0] is "window" and event.caller is "WebWorker"
+        funcName    = window
+        nestedFunc  = nestedFunc.slice(1)
+      else
+        funcName = @self
+
+      # Get nesting depth.
+      depth = nestedFunc.length
 
       # Reach function.
       for func, order in nestedFunc
@@ -54,7 +60,6 @@ class EasyWebWorker extends AbstractEasyWebWorker
       queryString = unless startupData is null then JSON.stringify(startupData) else null
       fileUrl += joiner + queryString
 
-
     # Create worker.
     @worker = new Worker(fileUrl)
 
@@ -65,6 +70,11 @@ class EasyWebWorker extends AbstractEasyWebWorker
     # Error statement.
     @worker.onerror = (event) =>
       @error.call(@, event, event.filename, event.lineno, event.message)
+
+  # Add special tag on listen event
+  listen: (event) ->
+    event.caller = "WebWorker"
+    super(event)
 
   # Execute worker function.
   execute: () ->
@@ -85,7 +95,6 @@ class EasyWebWorker extends AbstractEasyWebWorker
   close: () ->
     # Close worker from browser.
     @worker.terminate()
-
 
 # Worker side web worker controller.
 class WorkerSideController extends AbstractEasyWebWorker
@@ -114,10 +123,14 @@ class WorkerSideController extends AbstractEasyWebWorker
     else
       @self.startupData = null
 
-
     # Listen for messages.
     @self.onmessage = () =>
       @listen.apply(@, arguments)
+
+  # Add special tag on listen event
+  listen: (event) ->
+    event.caller = "WebBrowser"
+    super(event)
 
   # Execute browser function.
   execute: () ->

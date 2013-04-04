@@ -47,21 +47,22 @@
             }
 
         // Example 3 (Send startup data, mostly you can use it to send url settings etc.)
-        // Create startup data.
-        var startupData = {name:"Derp", surname:"Derpson", age:"23", location:"world"}
+            // Create startup data.
+            var startupData = {name:"Derp", surname:"Derpson", age:"23", location:"world"}
 
-        // Create worker with startupData.
-        var workerTwo = new EasyWebWorker('demo-worker.js', this, startupData)
+            // Create worker with startupData.
+            var workerTwo = new EasyWebWorker('demo-worker.js', this, startupData)
 
-        console.time("startUpData Effects")
-        // Execute worker.
-        workerTwo.execute("whatIsTheSettings")
+            // Execute worker.
+            workerTwo.execute("whatIsTheSettings")
 
-        // Get our startupData back.
-        getSettingsBack = function(event, startupData){
-            console.log("Here is our startup data: ", startupData)
-            console.timeEnd("startUpData Effects")
-        }
+            // Get our startupData back.
+            getSettingsBack = function(event, startupData){
+                console.log("Here is our startup data: ", startupData)
+            }
+
+        // Example 4 (Call window assigned functions.)
+            workerTwo.execute("logSomethingToConsole")
 
     </script>
     Open console for see communication.
