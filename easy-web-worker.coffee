@@ -4,7 +4,7 @@ class AbstractEasyWebWorker
   # Execute function.
   execute: (args) ->
     # Copy arguments to avoid "DataCloneError: The object could not be cloned."
-    (arg for arg in args)
+    (arg for arg in args when args.hasOwnProperty(arg))
 
   # Listen for communication.
   listen: (event) ->
