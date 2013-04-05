@@ -12,9 +12,7 @@ AbstractEasyWebWorker = (function() {
     _results = [];
     for (_i = 0, _len = args.length; _i < _len; _i++) {
       arg = args[_i];
-      if (args.hasOwnProperty(arg)) {
-        _results.push(arg);
-      }
+      _results.push(arg);
     }
     return _results;
   };
