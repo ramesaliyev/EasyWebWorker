@@ -47,6 +47,25 @@ class AbstractEasyWebWorker
       # If function is single, direct execute it.
       @self[funcName].apply(@self, args)
 
+  # Get value of variable.
+  get: (variable, callback, from) ->
+
+    # If variable name contains . (dot) process it as nested object.
+    if funcName.indexOf(".") isnt -1
+
+      # Split name.
+      nestedFunc   = funcName.split(".")
+
+      # Check if target function is assigned to window and script running on browser.
+      if nestedFunc[0] is "window" and event.caller is "WebWorker"
+        funcName    = window
+        nestedFunc  = nestedFunc.slice(1)
+      else
+        funcName = @self
+
+
+
+
 # Browser side web worker controller.
 class EasyWebWorker extends AbstractEasyWebWorker
 
@@ -137,6 +156,10 @@ class WorkerSideController extends AbstractEasyWebWorker
     # Pass arguments to web worker.
     @self.postMessage(super(arguments))
 
+  # Call window.console.log function
+  log: () ->
+    @self.execute("window.console.log", arguments)
+
 # If in a worker, run automaticly.
 if this.document is undefined
 
@@ -145,3 +168,4 @@ if this.document is undefined
 
   # Create function alias.
   this.execute = this.caller.execute
+  this.log     = this.caller.log

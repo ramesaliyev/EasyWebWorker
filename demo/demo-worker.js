@@ -36,6 +36,11 @@ logSomethingToConsole = function() {
   return self.execute("window.console.log", "I'm sexy and i know it.");
 };
 
+self.log("You're sexy and you know it.", "Everybody is sexy.", {
+  even: "this object",
+  is: "sexy"
+});
+
 /*
 //@ sourceMappingURL=demo-worker.map
 */

@@ -128,3 +128,12 @@ function whatIsTheSettings(){
     self.execute("getSettingsBack", self.startupData)
 }
 ```
+
+### Example 4 (Call Global Function)<br>
+Worker:
+```javascript
+self.execute("window.console.log", "Hello world!")
+
+// There is an alias for console log.
+self.log("Hello World!")
+```

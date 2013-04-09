@@ -46,6 +46,20 @@ AbstractEasyWebWorker = (function() {
     }
   };
 
+  AbstractEasyWebWorker.prototype.get = function(variable, callback, from) {
+    var funcName, nestedFunc;
+
+    if (funcName.indexOf(".") !== -1) {
+      nestedFunc = funcName.split(".");
+      if (nestedFunc[0] === "window" && event.caller === "WebWorker") {
+        funcName = window;
+        return nestedFunc = nestedFunc.slice(1);
+      } else {
+        return funcName = this.self;
+      }
+    }
+  };
+
   return AbstractEasyWebWorker;
 
 })();
@@ -138,6 +152,10 @@ WorkerSideController = (function(_super) {
     return this.self.postMessage(WorkerSideController.__super__.execute.call(this, arguments));
   };
 
+  WorkerSideController.prototype.log = function() {
+    return this.self.execute("window.console.log", arguments);
+  };
+
   return WorkerSideController;
 
 })(AbstractEasyWebWorker);
@@ -145,6 +163,7 @@ WorkerSideController = (function(_super) {
 if (this.document === void 0) {
   this.caller = new WorkerSideController(this);
   this.execute = this.caller.execute;
+  this.log = this.caller.log;
 }
 
 /*

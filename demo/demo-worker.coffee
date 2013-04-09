@@ -24,3 +24,6 @@ whatIsTheSettings = (event) ->
 # Call directly window assigned functions.
 logSomethingToConsole = () ->
   self.execute("window.console.log", "I'm sexy and i know it.")
+
+# Using .log method
+self.log("You're sexy and you know it.", "Everybody is sexy.", {even:"this object", is:"sexy"})

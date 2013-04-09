@@ -6,6 +6,8 @@
 <body>
     <script src="../easy-web-worker.js"></script>
     <script>
+        // Global variable.
+        window.debbuging = true
 
         // Create new EasyWebWorker with file.
         var worker = new EasyWebWorker('demo-worker.js', this, {name:"Derp", surname:"Derpson", age:"23"});
