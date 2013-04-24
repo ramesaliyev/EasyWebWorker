@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Easy Web Worker</title>
+</head>
+<body>
+    <script>
+
+        // Test fallback.
+        window.Worker = null
+
+    </script>
+    <script src="../../easy-web-worker.js"></script>
+    <script>
+
+        // Create new EasyWebWorker with file.
+        var worker = new EasyWebWorker('basic-operations.js', this, {name:"Derp", surname:"Derpson", age:"23"});
+
+        // Tests
+        worker.execute("plus", 5, 5)
+        worker.execute("minus", 20, 5)
+        worker.execute("divide", 100, 5)
+        worker.execute("multiply", 5, 5)
+
+    </script>
+    Open console for see communication.
+</body>
+</html>

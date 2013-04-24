@@ -1,5 +1,5 @@
 ###
-  EasyWebWorker v0.4
+  EasyWebWorker v0.2
   Rames Aliyev -2013
 
   -> easywebworker.com

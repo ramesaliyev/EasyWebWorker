@@ -1,4 +1,4 @@
-importScripts("../easy-web-worker.js")
+importScripts("../../easy-web-worker.js")
 
 # Simple function.
 getSquares = (event, numberArray) ->
@@ -25,5 +25,5 @@ whatIsTheSettings = (event) ->
 logSomethingToConsole = () ->
   self.execute("window.console.log", "I'm sexy and i know it.")
 
-# Using .log method
-self.log("You're sexy and you know it.", "Everybody is sexy.", {even:"this object", is:"sexy"})
+  # Using .log method
+  self.log("You're sexy and you know it.", "Everybody is sexy.", {even:"this object", is:"sexy"})

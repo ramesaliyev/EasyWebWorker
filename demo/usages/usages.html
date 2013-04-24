@@ -4,13 +4,17 @@
     <title>Easy Web Worker</title>
 </head>
 <body>
-    <script src="../easy-web-worker.js"></script>
     <script>
-        // Global variable.
-        window.debbuging = true
+
+        // Test fallback.
+        // window.Worker = null
+
+    </script>
+    <script src="../../easy-web-worker.js"></script>
+    <script>
 
         // Create new EasyWebWorker with file.
-        var worker = new EasyWebWorker('demo-worker.js', this, {name:"Derp", surname:"Derpson", age:"23"});
+        var worker = new EasyWebWorker('usages-worker.js', this, {name:"Derp", surname:"Derpson", age:"23"});
 
         // On error statement.
         worker.onerror = function(event,filename,lineno,message){
@@ -53,7 +57,7 @@
             var startupData = {name:"Derp", surname:"Derpson", age:"23", location:"world"}
 
             // Create worker with startupData.
-            var workerTwo = new EasyWebWorker('demo-worker.js', this, startupData)
+            var workerTwo = new EasyWebWorker('usages-worker.js', this, startupData)
 
             // Execute worker.
             workerTwo.execute("whatIsTheSettings")

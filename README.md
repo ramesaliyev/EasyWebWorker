@@ -1,6 +1,15 @@
+**Easywebworker v0.2**<br>
+Easy Communication Protocol For Web Workers<br>
 *Just execute worker functions from browser, and main functions from worker.*
 
-## Prepare
+# Features
+- Fallback support for old browsers. (AKA Internet Explorer Support.)
+- Execute functions directly. Nested functions are supported.
+- Execute global functions from worker.
+- Start Worker with startup data.
+- Alias for console.log for ease debugging.
+
+# Prepare
 
 ### On Browser
 
@@ -16,7 +25,7 @@ var worker = new EasyWebWorker("worker.js", this);
 importScripts("easy-web-worker.js");
 ```
 
-## Methods
+# Methods
 Error Statement (On browser.):
 ```javascript
 worker.onerror = function(event,filename,lineno,message){
@@ -36,7 +45,7 @@ Terminate In Worker (Same as default.):
 self.close();
 ```
 
-## Examples
+# Examples
 
 ### Example 1 (Simple Usage)
 Browser:
