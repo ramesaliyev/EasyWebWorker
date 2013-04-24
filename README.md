@@ -1,7 +1,3 @@
-EasyWebWorker
-=============
-
-Easy Communication Protocol For Web Workers.<br>
 *Just execute worker functions from browser, and main functions from worker.*
 
 ## Prepare
