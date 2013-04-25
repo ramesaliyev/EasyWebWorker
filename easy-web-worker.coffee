@@ -55,22 +55,6 @@ class _ExecuteStructure
       # If function is single, direct execute it.
       @context[funcName].apply(@context, args)
 
-  # Get value of variable.
-  get: (variable, callback, from) ->
-
-    # If variable name contains . (dot) process it as nested object.
-    if funcName.indexOf(".") isnt -1
-
-      # Split name.
-      nestedFunc   = funcName.split(".")
-
-      # Check if target function is assigned to window and script running on browser.
-      if nestedFunc[0] is "window" and event.caller is "WebWorker"
-        funcName    = window
-        nestedFunc  = nestedFunc.slice(1)
-      else
-        funcName = @context
-
 # Browser side web worker controller.
 class EasyWebWorker extends _ExecuteStructure
 

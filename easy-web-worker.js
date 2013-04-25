@@ -54,20 +54,6 @@ _ExecuteStructure = (function() {
     }
   };
 
-  _ExecuteStructure.prototype.get = function(variable, callback, from) {
-    var funcName, nestedFunc;
-
-    if (funcName.indexOf(".") !== -1) {
-      nestedFunc = funcName.split(".");
-      if (nestedFunc[0] === "window" && event.caller === "WebWorker") {
-        funcName = window;
-        return nestedFunc = nestedFunc.slice(1);
-      } else {
-        return funcName = this.context;
-      }
-    }
-  };
-
   return _ExecuteStructure;
 
 })();
