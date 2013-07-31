@@ -2,6 +2,8 @@
 Easy Communication Protocol For Web Workers<br>
 *Just execute worker functions from browser, and main functions from worker.*
 
+> Also work when web worker is not available. So support Web Worker on older Internet Explorers.
+
 # Features
 - Fallback support for old browsers. (AKA Internet Explorer Support.)
 - Execute functions directly. Nested functions are supported.
