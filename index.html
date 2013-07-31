@@ -1,38 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Easy Communication Protocol For Web Workers">
-    <meta name="keywords" content="web workers, HTML5 web workers, easy web worker, web worker, web worker plugin, ramesaliyev">
-  
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
     <title>Easywebworker v0.2 by ramesaliyev</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
   </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Easywebworker v0.2</h1>
-        <p>Easy Communication Protocol For Web Workers</p>
-        <p class="view"><a href="https://github.com/ramesaliyev/EasyWebWorker">View the Project on GitHub <small>ramesaliyev/EasyWebWorker</small></a></p>
-        <ul>
-          <li><a href="https://github.com/ramesaliyev/EasyWebWorker/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/ramesaliyev/EasyWebWorker/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/ramesaliyev/EasyWebWorker">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <p>Just execute worker functions from browser, and main functions from worker.</p>
 
-<h1>Features</h1>
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Easywebworker v0.2</h1>
+        <h2>Easy Communication Protocol For Web Workers</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/ramesaliyev/EasyWebWorker/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/ramesaliyev/EasyWebWorker/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/ramesaliyev/EasyWebWorker" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p><strong>Easywebworker v0.2</strong><br>
+Easy Communication Protocol For Web Workers<br><em>Just execute worker functions from browser, and main functions from worker.</em></p>
+
+<blockquote>
+<p>Also work when web worker is not available. So support Web Worker on older Internet Explorers.</p>
+</blockquote>
+
+<h1>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h1>
 
 <ul>
 <li>Fallback support for old browsers. (AKA Internet Explorer Support.)</li>
@@ -40,21 +44,25 @@
 <li>Execute global functions from worker.</li>
 <li>Start Worker with startup data.</li>
 <li>Alias for console.log for ease debugging.</li>
-</ul><h1>Prepare</h1>
+</ul><h1>
+<a name="prepare" class="anchor" href="#prepare"><span class="octicon octicon-link"></span></a>Prepare</h1>
 
-<h3>On Browser</h3>
+<h3>
+<a name="on-browser" class="anchor" href="#on-browser"><span class="octicon octicon-link"></span></a>On Browser</h3>
 
 <div class="highlight"><pre><span class="c1">// Just include script to page and create EasyWebWorker with context.</span>
 <span class="kd">var</span> <span class="nx">worker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">EasyWebWorker</span><span class="p">(</span><span class="s2">"worker.js"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
 </pre></div>
 
-<h3>In Worker</h3>
+<h3>
+<a name="in-worker" class="anchor" href="#in-worker"><span class="octicon octicon-link"></span></a>In Worker</h3>
 
 <div class="highlight"><pre><span class="c1">// Just import script.</span>
 <span class="nx">importScripts</span><span class="p">(</span><span class="s2">"easy-web-worker.js"</span><span class="p">);</span>
 </pre></div>
 
-<h1>Methods</h1>
+<h1>
+<a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>Methods</h1>
 
 <p>Error Statement (On browser.):</p>
 
@@ -75,9 +83,11 @@
 <div class="highlight"><pre><span class="nx">self</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
 </pre></div>
 
-<h1>Examples</h1>
+<h1>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h1>
 
-<h3>Example 1 (Simple Usage)</h3>
+<h3>
+<a name="example-1-simple-usage" class="anchor" href="#example-1-simple-usage"><span class="octicon octicon-link"></span></a>Example 1 (Simple Usage)</h3>
 
 <p>Browser:</p>
 
@@ -105,7 +115,8 @@
 <span class="p">}</span>
 </pre></div>
 
-<h3>Example 2 (Nested Functions)</h3>
+<h3>
+<a name="example-2-nested-functions" class="anchor" href="#example-2-nested-functions"><span class="octicon octicon-link"></span></a>Example 2 (Nested Functions)</h3>
 
 <p>Browser:</p>
 
@@ -139,7 +150,8 @@
 <span class="p">};</span>
 </pre></div>
 
-<h3>Example 3 (Startup Data)<br>
+<h3>
+<a name="example-3-startup-data" class="anchor" href="#example-3-startup-data"><span class="octicon octicon-link"></span></a>Example 3 (Startup Data)<br>
 </h3>
 
 <p>(It uses worker file's querystring. So keep it as tiny as possible.)
@@ -168,7 +180,8 @@ Browser:</p>
 <span class="p">}</span>
 </pre></div>
 
-<h3>Example 4 (Call Global Function)<br>
+<h3>
+<a name="example-4-call-global-function" class="anchor" href="#example-4-call-global-function"><span class="octicon octicon-link"></span></a>Example 4 (Call Global Function)<br>
 </h3>
 
 <p>Worker:</p>
@@ -180,11 +193,7 @@ Browser:</p>
 </pre></div>
       </section>
     </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/ramesaliyev">ramesaliyev</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
