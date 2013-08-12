@@ -1,4 +1,4 @@
-**Easywebworker v0.2**<br>
+**Easywebworker v0.2.1**<br>
 Easy Communication Protocol For Web Workers<br>
 *Just execute worker functions from browser, and main functions from worker.*
 
@@ -10,6 +10,9 @@ Easy Communication Protocol For Web Workers<br>
 - Execute global functions from worker.
 - Start Worker with startup data.
 - Alias for console.log for ease debugging.
+
+# Changelog
+- 0.2.1 - XDomainRequest Fallback Support added for crossdomain request on older internet explorers.
 
 # Prepare
 
