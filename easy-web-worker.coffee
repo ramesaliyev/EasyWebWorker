@@ -1,5 +1,5 @@
 ###
-  EasyWebWorker v0.2
+  EasyWebWorker v0.2.1
   Rames Aliyev -2013
 
   -> easywebworker.com
@@ -192,9 +192,6 @@ class _WorkerFallback
   # Worker: Fake worker.
   constructor: (file, @easyWebWorkerInstance, @files={}, @quene=[], @depth=0, @worker=null) ->
 
-    # Avoid create fallback twice.
-    window._WorkerPrepared = true
-
     # Load main script.
     @_loadFile(file, true)
 
@@ -212,7 +209,10 @@ class _WorkerFallback
     # Assign loaded event.
     XHR.onreadystatechange = () =>
       if XHR.readyState is 4 and (XHR.status is 200 or window.location.href.indexOf("http") is -1)
+        fileLoaded()
 
+    # When file loaded.
+    fileLoaded = () =>
         # Get loaded content.
         content = XHR.responseText
 
@@ -227,8 +227,27 @@ class _WorkerFallback
         @_importScripts(content)
 
     # Get the script.
-    XHR.open('GET', file, true)
-    XHR.send(null)
+    try
+      # Will work fine in:
+      # - Modern browsers (same domain and cross domain if allow cross domain policy setted right)
+      # - Internet Explorers (same domain)
+      XHR.open('GET', file, true)
+      XHR.send(null)
+
+    catch error
+      # Fallback to XDomainRequest if available
+      # Will for fine in Internet Explorers for cross domain request.
+      if typeof XDomainRequest isnt "undefined"
+
+        # Create XHR
+        XHR = new XDomainRequest()
+        XHR.onerror = XHR.onprogress = () ->
+        XHR.onload = fileLoaded
+
+        # Connect
+        XHR.open('GET', file, true)
+        XHR.send(null)
+
 
   # Search for importScripts
   _importScripts: (content) ->
@@ -302,7 +321,7 @@ class _WorkerFallback
           funcContext = funcContext.join(".")
           funcContext = eval(funcContext)
 
-          # If root function.
+        # If root function.
         else
           funcContext = eval(funcName)
 
@@ -319,7 +338,7 @@ class _WorkerFallback
     if @worker?
       @worker(command)
 
-      # Else add command into command cache
+    # Else add command into command cache
     else
       @quene.push(command)
 
@@ -330,7 +349,7 @@ class _WorkerFallback
 
 # STARTUP PROCESS
 # Create web worker fallback if browser doesnt support Web Workers.
-if this.document isnt undefined and !window.Worker and !window._WorkerPrepared
+if this.document isnt undefined and !window.Worker
   window.Worker = _WorkerFallback
 
 # If in a worker run automaticly.
