@@ -196,7 +196,7 @@ _WorkerSideFallback = (function(_super) {
 _WorkerFallback = (function() {
   var importscripts_regexp;
 
-  importscripts_regexp = /importScripts\("(.*)"\);?/gi;
+  importscripts_regexp = /importScripts\(["'](.*?)["']\)/gi;
 
   function _WorkerFallback(file, easyWebWorkerInstance, files, quene, depth, worker) {
     this.easyWebWorkerInstance = easyWebWorkerInstance;

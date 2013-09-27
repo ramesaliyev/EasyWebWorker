@@ -182,7 +182,7 @@ class _WorkerSideFallback extends _WorkerSideController
 class _WorkerFallback
 
 # Import Scripts regular expression.
-  importscripts_regexp = /importScripts\("(.*)"\);?/gi
+  importscripts_regexp = /importScripts\(["'](.*?)["']\)/gi
 
   # When worker created load the file.
   # Main: main web worker file.
