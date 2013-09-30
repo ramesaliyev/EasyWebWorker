@@ -196,7 +196,7 @@ _WorkerSideFallback = (function(_super) {
 _WorkerFallback = (function() {
   var importscripts_regexp;
 
-  importscripts_regexp = /importScripts\(["'](.*?)["']\)/gi;
+  importscripts_regexp = /importScripts\(["'](.*?)["']\)[;,]/gi;
 
   function _WorkerFallback(file, easyWebWorkerInstance, files, quene, depth, worker) {
     this.easyWebWorkerInstance = easyWebWorkerInstance;
@@ -260,7 +260,7 @@ _WorkerFallback = (function() {
       this.depth++;
       for (_i = 0, _len = matches.length; _i < _len; _i++) {
         matched = matches[_i];
-        this.files[matched.replace(importscripts_regexp, "$1")] = {
+        this.files[matched.replace(importscripts_regexp, ";$1;")] = {
           content: void 0,
           depth: this.depth
         };

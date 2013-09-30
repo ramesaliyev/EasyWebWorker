@@ -182,7 +182,7 @@ class _WorkerSideFallback extends _WorkerSideController
 class _WorkerFallback
 
 # Import Scripts regular expression.
-  importscripts_regexp = /importScripts\(["'](.*?)["']\)/gi
+  importscripts_regexp = /importScripts\(["'](.*?)["']\)[;,]/gi
 
   # When worker created load the file.
   # Main: main web worker file.
@@ -261,7 +261,7 @@ class _WorkerFallback
 
       # Add importScripts into files container to load and process them by right depth order.
       for matched in matches
-        @files[matched.replace(importscripts_regexp, "$1")] = {content: undefined, depth:@depth}
+        @files[matched.replace(importscripts_regexp, ";$1;")] = {content: undefined, depth:@depth}
 
     # Load files.
     for filename, data of @files when data.content is undefined and filename isnt "main"
