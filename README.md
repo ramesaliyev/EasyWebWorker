@@ -1,3 +1,5 @@
+> # This library is not in development anymore because of great alternatives, use one of them; [parallel.js](https://github.com/adambom/parallel.js), [operative](https://github.com/padolsey/operative), [catiline](https://github.com/calvinmetcalf/catiline).
+
 **Easywebworker v0.2.1**<br>
 Easy Communication Protocol For Web Workers<br>
 *Just execute worker functions from browser, and main functions from worker.*
